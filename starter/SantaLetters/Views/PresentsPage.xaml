@@ -1,20 +1,25 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SantaLetters.Views.PresentsPage"
-             Title="Choose presents">
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<controls:StoryPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:controls="clr-namespace:SantaLetters.Controls"
+                    x:Class="SantaLetters.Views.PresentsPage"
+                    Title="Choose presents">
 
     <!-- TODO (Stage 1): show IPresentCatalog.All as big tappable tiles (try a CollectionView with a
          GridItemsLayout, Span="6") and let the child pick up to LetterValidator.MaxPresents.
-         Save the choices into LetterDraft.Presents, then navigate on to the letter page. -->
+         Save the choices into LetterDraft.Presents, then navigate on to the letter page.
+         Tip: StoryHeader has an Accessory slot (great for an "x of 5 chosen" counter), and the
+         CategoryBrushConverter in Converters/ gives each present category its own gradient. -->
     <Grid RowDefinitions="Auto,*">
-        <Border Style="{StaticResource HeaderBand}">
-            <Label Text="🎁 Choose your presents" Style="{StaticResource HeaderTitle}" />
+        <controls:StoryHeader Title="Choose your presents" />
+        <Border Grid.Row="1" Style="{StaticResource LetterPaper}" VerticalOptions="Center" HorizontalOptions="Center"
+                Padding="64,40">
+            <VerticalStackLayout Spacing="16">
+                <Label Text="🧝" FontSize="110" HorizontalOptions="Center" />
+                <Label Text="The elves haven't built this page yet... that's your job!"
+                       Style="{StaticResource Heading}" HorizontalOptions="Center" />
+                <Label Style="{StaticResource Flourish}" />
+            </VerticalStackLayout>
         </Border>
-        <VerticalStackLayout Grid.Row="1" VerticalOptions="Center" Spacing="16">
-            <Label Text="🧝" FontSize="110" HorizontalOptions="Center" />
-            <Label Text="The elves haven't built this page yet... that's your job!"
-                   Style="{StaticResource Heading}" HorizontalOptions="Center" />
-        </VerticalStackLayout>
     </Grid>
-</ContentPage>
+</controls:StoryPage>

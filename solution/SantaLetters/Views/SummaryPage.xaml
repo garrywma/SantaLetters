@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:SantaLetters.ViewModels"
-             xmlns:models="clr-namespace:SantaLetters.Core.Models;assembly=SantaLetters.Core"
-             x:Class="SantaLetters.Views.SummaryPage"
-             x:DataType="vm:SummaryViewModel"
-             Title="Send to Santa">
+<controls:StoryPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:vm="clr-namespace:SantaLetters.ViewModels"
+                    xmlns:controls="clr-namespace:SantaLetters.Controls"
+                    xmlns:models="clr-namespace:SantaLetters.Core.Models;assembly=SantaLetters.Core"
+                    x:Class="SantaLetters.Views.SummaryPage"
+                    x:DataType="vm:SummaryViewModel"
+                    Title="Send to Santa">
 
     <Grid RowDefinitions="Auto,*,Auto">
-        <Border Style="{StaticResource HeaderBand}">
-            <Label Text="✉️ Ready to send to the North Pole?" Style="{StaticResource HeaderTitle}" />
-        </Border>
+        <controls:StoryHeader Title="Ready for the North Pole?" />
 
         <ScrollView Grid.Row="1">
-            <Grid ColumnDefinitions="3*,2*" Padding="40,24" ColumnSpacing="32">
+            <Grid ColumnDefinitions="3*,2*" Padding="40,20" ColumnSpacing="32">
                 <Border Style="{StaticResource LetterPaper}">
-                    <VerticalStackLayout Spacing="16">
-                        <Label Text="Dear Santa," Style="{StaticResource Heading}" />
-                        <Label Text="For Christmas I would love:" Style="{StaticResource Body}" />
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="Dear Santa," Style="{StaticResource Handwriting}" FontFamily="HandwritingBold" FontSize="38" />
+                        <Label Text="For Christmas I would love:" Style="{StaticResource Handwriting}" />
                         <FlexLayout BindableLayout.ItemsSource="{Binding Presents}" Wrap="Wrap">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="models:Present">
-                                    <Border BackgroundColor="White" StrokeShape="RoundRectangle 20" Stroke="{StaticResource Gold}"
-                                            Padding="16,8" Margin="0,0,12,12">
-                                        <Label FontSize="24" TextColor="{StaticResource Ink}">
+                                    <Border Background="{StaticResource ParchmentBrush}" StrokeShape="RoundRectangle 20"
+                                            Stroke="{StaticResource Gold}" StrokeThickness="2" Padding="16,6" Margin="0,0,12,12">
+                                        <Label FontSize="24">
                                             <Label.FormattedText>
                                                 <FormattedString>
                                                     <Span Text="{Binding Emoji}" />
@@ -36,8 +35,8 @@
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </FlexLayout>
-                        <Label Text="{Binding ExtraWishes}" Style="{StaticResource Body}" FontAttributes="Italic" />
-                        <Label Style="{StaticResource Heading}">
+                        <Label Text="{Binding ExtraWishes}" Style="{StaticResource Handwriting}" FontSize="28" />
+                        <Label Style="{StaticResource Handwriting}" FontFamily="HandwritingBold" FontSize="34">
                             <Label.FormattedText>
                                 <FormattedString>
                                     <Span Text="Love from " />
@@ -46,15 +45,19 @@
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-                        <Label Text="{Binding AgeText}" Style="{StaticResource Body}" />
+                        <Label Text="{Binding AgeText}" Style="{StaticResource Handwriting}" FontSize="24" />
                     </VerticalStackLayout>
                 </Border>
 
-                <VerticalStackLayout Grid.Column="1" Spacing="24" VerticalOptions="Center">
-                    <Border Style="{StaticResource Card}">
-                        <VerticalStackLayout Spacing="8">
+                <VerticalStackLayout Grid.Column="1" Spacing="20" VerticalOptions="Center">
+                    <Border Style="{StaticResource Card}" Padding="28,24">
+                        <VerticalStackLayout Spacing="10">
+                            <Border Style="{StaticResource WaxSeal}" WidthRequest="96" HeightRequest="96" HorizontalOptions="Center">
+                                <Label Text="SC" Style="{StaticResource WaxSealText}" FontSize="34" />
+                            </Border>
                             <Label Text="Santa's Nice List says..." Style="{StaticResource Heading}" HorizontalTextAlignment="Center" />
-                            <Label Text="{Binding NiceMessage}" Style="{StaticResource Body}" FontSize="28" HorizontalTextAlignment="Center" />
+                            <Label Style="{StaticResource Flourish}" />
+                            <Label Text="{Binding NiceMessage}" FontSize="28" HorizontalTextAlignment="Center" />
                         </VerticalStackLayout>
                     </Border>
                     <Label Text="{Binding ErrorMessage}" Style="{StaticResource ErrorText}" HorizontalTextAlignment="Center" />
@@ -63,18 +66,59 @@
         </ScrollView>
 
         <Grid Grid.Row="2" Style="{StaticResource Footer}" ColumnDefinitions="Auto,*,Auto">
-            <Button Text="◀ Back" Style="{StaticResource SecondaryButton}" Command="{Binding BackCommand}" />
-            <Button Grid.Column="2" Text="Send to Santa 🛷" Style="{StaticResource PrimaryButton}" Command="{Binding SendCommand}" />
+            <Button Text="Back" Style="{StaticResource SecondaryButton}" Command="{Binding BackCommand}" />
+            <Button Grid.Column="2" Text="Seal &amp; send to Santa" Style="{StaticResource BerryButton}" Command="{Binding SendCommand}" />
         </Grid>
 
-        <!-- "Sent" celebration overlay -->
-        <Grid Grid.RowSpan="3" BackgroundColor="{StaticResource HollyGreen}" IsVisible="{Binding IsSent}">
-            <VerticalStackLayout VerticalOptions="Center" Spacing="24">
-                <Label Text="🦌🛷✨" FontSize="120" HorizontalOptions="Center" />
-                <Label Text="Your letter is on its way to Santa!" FontSize="44" FontAttributes="Bold"
-                       TextColor="White" HorizontalTextAlignment="Center" />
-                <Label Text="Merry Christmas! 🎄" FontSize="32" TextColor="{StaticResource Paper}" HorizontalTextAlignment="Center" />
-            </VerticalStackLayout>
+        <!-- "Sent" celebration: the letter is folded into an envelope, wax-sealed and flown away by sleigh.
+             The sequence is played from SummaryPage.xaml.cs when IsSent becomes true. -->
+        <Grid x:Name="SentOverlay" Grid.RowSpan="3" Background="{StaticResource NightBrush}"
+              IsVisible="{Binding IsSent}" Opacity="0">
+            <controls:SnowView FlakeCount="110" />
+
+            <Grid RowDefinitions="*,Auto,Auto,*" RowSpacing="20">
+                <Grid x:Name="Envelope" Grid.Row="1" WidthRequest="460" HeightRequest="300" HorizontalOptions="Center">
+                    <Border ZIndex="0" Background="#E2C995" Stroke="{StaticResource Gold}" StrokeThickness="2"
+                            StrokeShape="RoundRectangle 8" />
+
+                    <Polygon x:Name="Flap" ZIndex="1" Points="0,0 460,0 230,170" HeightRequest="170" VerticalOptions="Start"
+                             Fill="#EBD6A8" Stroke="{StaticResource Gold}" StrokeThickness="2"
+                             AnchorY="0" RotationX="180" />
+
+                    <Border x:Name="LetterSheet" ZIndex="2" Background="{StaticResource LetterBrush}" Stroke="#D8C08A"
+                            StrokeShape="RoundRectangle 4" Margin="30,18" Padding="22,14" TranslationY="-200">
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="Dear Santa," Style="{StaticResource Handwriting}" FontSize="28" />
+                            <BoxView HeightRequest="2" Color="#D8C08A" />
+                            <BoxView HeightRequest="2" Color="#D8C08A" />
+                            <BoxView HeightRequest="2" Color="#D8C08A" />
+                            <Label Style="{StaticResource Handwriting}" FontSize="24">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Love from " />
+                                        <Span Text="{Binding ChildName}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Polygon ZIndex="3" Points="0,0 230,165 460,0 460,300 0,300"
+                             Fill="#F4E4C1" Stroke="{StaticResource Gold}" StrokeThickness="2" />
+
+                    <Border x:Name="Seal" ZIndex="5" Style="{StaticResource WaxSeal}" WidthRequest="88" HeightRequest="88"
+                            HorizontalOptions="Center" VerticalOptions="Start" Margin="0,126,0,0" Opacity="0">
+                        <Label Text="SC" Style="{StaticResource WaxSealText}" FontSize="30" />
+                    </Border>
+                </Grid>
+
+                <Label x:Name="SentTitle" Grid.Row="2" Text="Your letter is on its way to Santa!" Opacity="0"
+                       FontFamily="ChristmasTitle" FontSize="54" TextColor="{StaticResource GoldLight}" HorizontalTextAlignment="Center" />
+                <Label x:Name="SentSubtitle" Grid.Row="3" Text="Merry Christmas! 🎄" Opacity="0" VerticalOptions="Start"
+                       FontFamily="StoryItalic" FontSize="34" TextColor="{StaticResource Paper}" HorizontalTextAlignment="Center" />
+            </Grid>
+
+            <Label x:Name="Sleigh" Text="🦌🦌🛷" FontSize="72" HorizontalOptions="Start" VerticalOptions="Start" Opacity="0" />
         </Grid>
     </Grid>
-</ContentPage>
+</controls:StoryPage>

@@ -15,11 +15,18 @@ Build that app in **.NET MAUI**, running on a **Meta (Facebook) Portal Mini**.
 SantaLetters/
 ├── README.md         ← this brief
 ├── handout.pdf       ← 2-page printable attendee handout (source: handout.html)
-├── starter/          ← give this to attendees
+├── starter/          ← give this to attendees (storybook theme)
+├── starter-classic/  ← the original, simpler-themed starter
 └── solution/         ← the facilitator's reference solution (don't peek!)
 ```
 
-Both folders have the same shape:
+> 🎨 **Two looks:** the `main` branch has the original simple theme. The `deluxe-ux` branch has a
+> "vintage storybook" theme in both `starter/` and `solution/`: parchment pages, Christmas fonts, twinkling
+> fairy lights, falling snow, gift-wrapped present tiles, page-turn transitions and a wax-seal envelope
+> animation when the letter is sent. On `deluxe-ux`, `starter-classic/` keeps the original starter for
+> groups who'd rather start from something plainer.
+
+All three folders have the same shape:
 
 | Project | What it is |
 | --- | --- |
@@ -145,7 +152,10 @@ Portals were discontinued at the end of 2022, but Meta has since enabled ADB so 
 
 ✅ Provided:
 - Christmas theme (`Resources/Styles/Christmas.xaml`) with Portal-friendly styles: `HeaderBand`, `PrimaryButton`, `SecondaryButton`, `RoundButton`, `Card`, `LetterPaper`, `Heading`, `Body`, `ErrorText`, `Footer`.
-- Working **Welcome page** (name and age) using CommunityToolkit.Mvvm and Shell navigation.
+  - Storybook extras (`deluxe-ux`): the `BerryButton`, `Handwriting`, `Flourish`, `WaxSeal` and `WaxSealText` styles, and brushes such as `PageBrush`, `ParchmentBrush`, `NightBrush` and `BaubleBrush`.
+  - Reusable controls in `Controls/`: `StoryPage` (a base page with a page-turn transition), `StoryHeader` (a title band with fairy lights, snow and an `Accessory` slot), `SnowView` and `FairyLightsView`.
+  - `Converters/CategoryBrushConverter` gives each present category its own gradient.
+  - Fonts from Google Fonts (Mountains of Christmas, Cinzel Decorative, IM Fell DW Pica, Kalam) are under the SIL Open Font License or the Apache License. The licence texts are in `Resources/Fonts/Licenses/`.- Working **Welcome page** (name and age) using CommunityToolkit.Mvvm and Shell navigation.
 - `LetterDraft`: a singleton holding the letter while the child moves between pages.
 - Domain models, a present catalogue (18 presents, all with Portal-safe emoji) and 9 Nice List questions.
 - Dependency injection already wired up for the services.

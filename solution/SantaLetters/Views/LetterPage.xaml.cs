@@ -1,8 +1,9 @@
-﻿using SantaLetters.ViewModels;
+﻿using SantaLetters.Controls;
+using SantaLetters.ViewModels;
 
 namespace SantaLetters.Views;
 
-public partial class LetterPage : ContentPage
+public partial class LetterPage : StoryPage
 {
     private readonly LetterViewModel _vm;
 

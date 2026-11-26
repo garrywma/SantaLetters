@@ -1,6 +1,7 @@
+﻿using SantaLetters.Controls;
 namespace SantaLetters.Views;
 
-public partial class PresentsPage : ContentPage
+public partial class PresentsPage : StoryPage
 {
     public PresentsPage()
     {

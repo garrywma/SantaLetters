@@ -1,74 +1,198 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
+    "Vintage storybook" Christmas theme.
+
     Portal design notes:
     - Viewed from 50-100cm, so text is large and touch targets are >= 64dp (96dp for primary actions).
-    - Portal draws back/home/status pills over the top ~64dp of the app, so headers are dark and
-      padded down to keep content clear of them.
+    - Portal draws back/home/status pills over the top ~64dp of the app. StoryHeader fills that strip
+      with purely decorative fairy lights, so nothing important is ever hidden under the pills.
+
+    Fonts (see Resources/Fonts/Licenses):
+    - ChristmasTitle    Mountains of Christmas - hand-lettered titles and buttons
+    - StoryCaps         Cinzel Decorative      - wax seals and small flourishes
+    - StoryBody/Italic  IM Fell DW Pica        - old-fashioned storybook print
+    - Handwriting       Kalam                  - the child's own writing
 -->
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <Color x:Key="SantaRed">#C62828</Color>
-    <Color x:Key="SantaRedDark">#8E0000</Color>
-    <Color x:Key="HollyGreen">#1B5E20</Color>
-    <Color x:Key="HollyGreenLight">#E8F5E9</Color>
-    <Color x:Key="Snow">#FFFDF7</Color>
-    <Color x:Key="Paper">#FFF3D6</Color>
-    <Color x:Key="Gold">#F9A825</Color>
-    <Color x:Key="Ink">#3E2723</Color>
+    <!-- Palette -->
+    <Color x:Key="SantaRed">#9B1B1B</Color>
+    <Color x:Key="SantaRedDark">#5E0F0F</Color>
+    <Color x:Key="HollyGreen">#1E4A2E</Color>
+    <Color x:Key="HollyGreenDark">#10301D</Color>
+    <Color x:Key="HollyGreenLight">#E4EDD8</Color>
+    <Color x:Key="Snow">#FBF5E6</Color>
+    <Color x:Key="Paper">#F4E4C1</Color>
+    <Color x:Key="PaperDark">#E3CB98</Color>
+    <Color x:Key="Gold">#C9982B</Color>
+    <Color x:Key="GoldLight">#F3D98B</Color>
+    <Color x:Key="Ink">#3A2616</Color>
+    <Color x:Key="InkSoft">#7A6248</Color>
 
     <x:Double x:Key="PortalTopInset">72</x:Double>
 
+    <!-- Brushes -->
+    <RadialGradientBrush x:Key="PageBrush" Center="0.5,0.35" Radius="0.9">
+        <GradientStop Color="#FDF8EC" Offset="0" />
+        <GradientStop Color="#F3E5C6" Offset="0.65" />
+        <GradientStop Color="#E3CB98" Offset="1" />
+    </RadialGradientBrush>
+
+    <LinearGradientBrush x:Key="HeaderBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#A82424" Offset="0" />
+        <GradientStop Color="#6A1111" Offset="1" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="WorkshopHeaderBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#2A5E3F" Offset="0" />
+        <GradientStop Color="#10301D" Offset="1" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="GoldLeafBrush" StartPoint="0,0" EndPoint="1,0">
+        <GradientStop Color="#8E6A1C" Offset="0" />
+        <GradientStop Color="#F3D98B" Offset="0.5" />
+        <GradientStop Color="#8E6A1C" Offset="1" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="HollyButtonBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#2F6E47" Offset="0" />
+        <GradientStop Color="#173F29" Offset="1" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="BerryButtonBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#B82D2D" Offset="0" />
+        <GradientStop Color="#741414" Offset="1" />
+    </LinearGradientBrush>
+
+    <SolidColorBrush x:Key="DisabledButtonBrush" Color="#BDB19A" />
+
+    <LinearGradientBrush x:Key="ParchmentBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#FFFBF1" Offset="0" />
+        <GradientStop Color="#F2E3C2" Offset="1" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="LetterBrush" StartPoint="0,0" EndPoint="0.3,1">
+        <GradientStop Color="#FFF9E8" Offset="0" />
+        <GradientStop Color="#F0DCAE" Offset="1" />
+    </LinearGradientBrush>
+
+    <RadialGradientBrush x:Key="WaxSealBrush" Center="0.35,0.3" Radius="0.75">
+        <GradientStop Color="#D64545" Offset="0" />
+        <GradientStop Color="#8C1414" Offset="0.7" />
+        <GradientStop Color="#5A0A0A" Offset="1" />
+    </RadialGradientBrush>
+
+    <RadialGradientBrush x:Key="BaubleBrush" Center="0.35,0.3" Radius="0.8">
+        <GradientStop Color="#FFFFFFFF" Offset="0" />
+        <GradientStop Color="#99FFFFFF" Offset="0.55" />
+        <GradientStop Color="#33FFFFFF" Offset="1" />
+    </RadialGradientBrush>
+
+    <RadialGradientBrush x:Key="NightBrush" Center="0.5,0.45" Radius="0.85">
+        <GradientStop Color="#2A5E3F" Offset="0" />
+        <GradientStop Color="#123722" Offset="0.6" />
+        <GradientStop Color="#08180E" Offset="1" />
+    </RadialGradientBrush>
+
+    <!-- Implicit styles -->
     <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
-        <Setter Property="BackgroundColor" Value="{StaticResource Snow}" />
+        <Setter Property="Background" Value="{StaticResource PageBrush}" />
         <Setter Property="Shell.NavBarIsVisible" Value="False" />
     </Style>
 
+    <Style TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource Ink}" />
+        <Setter Property="FontFamily" Value="StoryBody" />
+        <Setter Property="FontSize" Value="24" />
+    </Style>
+
+    <Style TargetType="Entry">
+        <Setter Property="TextColor" Value="{StaticResource Ink}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource InkSoft}" />
+        <Setter Property="FontFamily" Value="Handwriting" />
+        <Setter Property="FontSize" Value="32" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+    </Style>
+
+    <Style TargetType="Editor">
+        <Setter Property="TextColor" Value="{StaticResource Ink}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource InkSoft}" />
+        <Setter Property="FontFamily" Value="Handwriting" />
+        <Setter Property="FontSize" Value="28" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+    </Style>
+
+    <Style TargetType="ProgressBar">
+        <Setter Property="ProgressColor" Value="{StaticResource Gold}" />
+    </Style>
+
+    <!-- Header (StoryHeader uses these; HeaderBand is kept for simple hand-built headers) -->
     <Style x:Key="HeaderBand" TargetType="Border">
-        <Setter Property="BackgroundColor" Value="{StaticResource SantaRed}" />
+        <Setter Property="Background" Value="{StaticResource HeaderBrush}" />
         <Setter Property="StrokeThickness" Value="0" />
         <Setter Property="Padding" Value="40,72,40,16" />
     </Style>
 
     <Style x:Key="HeaderTitle" TargetType="Label">
-        <Setter Property="TextColor" Value="White" />
-        <Setter Property="FontSize" Value="36" />
-        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource GoldLight}" />
+        <Setter Property="FontFamily" Value="ChristmasTitle" />
+        <Setter Property="FontSize" Value="46" />
     </Style>
 
     <Style x:Key="HeaderSubtitle" TargetType="Label">
         <Setter Property="TextColor" Value="{StaticResource Paper}" />
-        <Setter Property="FontSize" Value="22" />
+        <Setter Property="FontFamily" Value="StoryItalic" />
+        <Setter Property="FontSize" Value="24" />
         <Setter Property="VerticalOptions" Value="Center" />
     </Style>
 
+    <!-- Text -->
     <Style x:Key="Body" TargetType="Label">
         <Setter Property="TextColor" Value="{StaticResource Ink}" />
-        <Setter Property="FontSize" Value="24" />
+        <Setter Property="FontFamily" Value="StoryBody" />
+        <Setter Property="FontSize" Value="26" />
     </Style>
 
     <Style x:Key="Heading" TargetType="Label" BasedOn="{StaticResource Body}">
+        <Setter Property="TextColor" Value="{StaticResource SantaRedDark}" />
+        <Setter Property="FontFamily" Value="ChristmasTitle" />
+        <Setter Property="FontSize" Value="36" />
+    </Style>
+
+    <Style x:Key="Handwriting" TargetType="Label" BasedOn="{StaticResource Body}">
+        <Setter Property="FontFamily" Value="Handwriting" />
         <Setter Property="FontSize" Value="30" />
-        <Setter Property="FontAttributes" Value="Bold" />
     </Style>
 
     <Style x:Key="ErrorText" TargetType="Label" BasedOn="{StaticResource Body}">
         <Setter Property="TextColor" Value="{StaticResource SantaRed}" />
-        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontFamily" Value="StoryItalic" />
     </Style>
 
+    <Style x:Key="Flourish" TargetType="Label">
+        <Setter Property="Text" Value="❧  ✦  ☙" />
+        <Setter Property="TextColor" Value="{StaticResource Gold}" />
+        <Setter Property="FontSize" Value="26" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+    </Style>
+
+    <!-- Layout -->
     <Style x:Key="Footer" TargetType="Grid">
         <Setter Property="Padding" Value="40,12,40,24" />
         <Setter Property="ColumnSpacing" Value="24" />
-        <Setter Property="BackgroundColor" Value="{StaticResource Snow}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
     </Style>
 
+    <!-- Buttons -->
     <Style x:Key="PrimaryButton" TargetType="Button">
-        <Setter Property="BackgroundColor" Value="{StaticResource HollyGreen}" />
-        <Setter Property="TextColor" Value="White" />
-        <Setter Property="FontSize" Value="28" />
-        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="Background" Value="{StaticResource HollyButtonBrush}" />
+        <Setter Property="TextColor" Value="#FFF8E4" />
+        <Setter Property="BorderColor" Value="{StaticResource Gold}" />
+        <Setter Property="BorderWidth" Value="3" />
+        <Setter Property="FontFamily" Value="ChristmasTitle" />
+        <Setter Property="FontSize" Value="32" />
         <Setter Property="CornerRadius" Value="48" />
         <Setter Property="MinimumHeightRequest" Value="96" />
         <Setter Property="MinimumWidthRequest" Value="280" />
@@ -79,7 +203,9 @@
                     <VisualState x:Name="Normal" />
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="{StaticResource Gray300}" />
+                            <Setter Property="Background" Value="{StaticResource DisabledButtonBrush}" />
+                            <Setter Property="BorderColor" Value="#A89C84" />
+                            <Setter Property="TextColor" Value="#F6F0E2" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
@@ -87,40 +213,65 @@
         </Setter>
     </Style>
 
+    <Style x:Key="BerryButton" TargetType="Button" BasedOn="{StaticResource PrimaryButton}">
+        <Setter Property="Background" Value="{StaticResource BerryButtonBrush}" />
+    </Style>
+
     <Style x:Key="SecondaryButton" TargetType="Button">
-        <Setter Property="BackgroundColor" Value="White" />
-        <Setter Property="TextColor" Value="{StaticResource SantaRed}" />
-        <Setter Property="BorderColor" Value="{StaticResource SantaRed}" />
+        <Setter Property="Background" Value="{StaticResource ParchmentBrush}" />
+        <Setter Property="TextColor" Value="{StaticResource SantaRedDark}" />
+        <Setter Property="BorderColor" Value="{StaticResource Gold}" />
         <Setter Property="BorderWidth" Value="3" />
-        <Setter Property="FontSize" Value="24" />
+        <Setter Property="FontFamily" Value="ChristmasTitle" />
+        <Setter Property="FontSize" Value="28" />
         <Setter Property="CornerRadius" Value="40" />
         <Setter Property="MinimumHeightRequest" Value="80" />
         <Setter Property="Padding" Value="32,0" />
     </Style>
 
     <Style x:Key="RoundButton" TargetType="Button">
-        <Setter Property="BackgroundColor" Value="{StaticResource SantaRed}" />
-        <Setter Property="TextColor" Value="White" />
+        <Setter Property="Background" Value="{StaticResource BerryButtonBrush}" />
+        <Setter Property="TextColor" Value="{StaticResource GoldLight}" />
+        <Setter Property="BorderColor" Value="{StaticResource Gold}" />
+        <Setter Property="BorderWidth" Value="3" />
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
         <Setter Property="FontSize" Value="40" />
-        <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="WidthRequest" Value="88" />
         <Setter Property="HeightRequest" Value="88" />
         <Setter Property="CornerRadius" Value="44" />
         <Setter Property="Padding" Value="0" />
     </Style>
 
+    <!-- Surfaces -->
     <Style x:Key="Card" TargetType="Border">
-        <Setter Property="BackgroundColor" Value="White" />
-        <Setter Property="Stroke" Value="{StaticResource Gray200}" />
+        <Setter Property="Background" Value="{StaticResource ParchmentBrush}" />
+        <Setter Property="Stroke" Value="{StaticResource Gold}" />
         <Setter Property="StrokeThickness" Value="2" />
-        <Setter Property="StrokeShape" Value="RoundRectangle 24" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 20" />
         <Setter Property="Padding" Value="24" />
     </Style>
 
-    <Style x:Key="LetterPaper" TargetType="Border" BasedOn="{StaticResource Card}">
-        <Setter Property="BackgroundColor" Value="{StaticResource Paper}" />
+    <Style x:Key="LetterPaper" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource LetterBrush}" />
         <Setter Property="Stroke" Value="{StaticResource Gold}" />
-        <Setter Property="StrokeThickness" Value="4" />
+        <Setter Property="StrokeThickness" Value="3" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 6" />
+        <Setter Property="Padding" Value="32,24" />
+    </Style>
+
+    <Style x:Key="WaxSeal" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource WaxSealBrush}" />
+        <Setter Property="Stroke" Value="#5A0A0A" />
+        <Setter Property="StrokeThickness" Value="2" />
+        <Setter Property="StrokeShape" Value="Ellipse" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+
+    <Style x:Key="WaxSealText" TargetType="Label">
+        <Setter Property="FontFamily" Value="StoryCaps" />
+        <Setter Property="TextColor" Value="#F5C9A8" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
     </Style>
 
 </ResourceDictionary>

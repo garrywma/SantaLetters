@@ -1,8 +1,9 @@
-﻿using SantaLetters.ViewModels;
+﻿using SantaLetters.Controls;
+using SantaLetters.ViewModels;
 
 namespace SantaLetters.Views;
 
-public partial class WelcomePage : ContentPage
+public partial class WelcomePage : StoryPage
 {
     private readonly WelcomeViewModel _vm;
 

@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:SantaLetters.ViewModels"
-             x:Class="SantaLetters.Views.PresentsPage"
-             x:DataType="vm:PresentsViewModel"
-             Title="Choose presents">
+<controls:StoryPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:vm="clr-namespace:SantaLetters.ViewModels"
+                    xmlns:controls="clr-namespace:SantaLetters.Controls"
+                    xmlns:converters="clr-namespace:SantaLetters.Converters"
+                    x:Class="SantaLetters.Views.PresentsPage"
+                    x:DataType="vm:PresentsViewModel"
+                    Title="Choose presents">
+
+    <ContentPage.Resources>
+        <converters:CategoryBrushConverter x:Key="CategoryBrush" />
+    </ContentPage.Resources>
 
     <Grid RowDefinitions="Auto,Auto,*,Auto">
-        <Border Style="{StaticResource HeaderBand}">
-            <Grid ColumnDefinitions="*,Auto">
-                <Label Text="🎁 Choose your presents" Style="{StaticResource HeaderTitle}" />
-                <Label Grid.Column="1" Text="{Binding CountText}" Style="{StaticResource HeaderSubtitle}" />
-            </Grid>
-        </Border>
+        <controls:StoryHeader Title="Choose your presents" Subtitle="{Binding CountText}" />
 
-        <Label Grid.Row="1" Text="{Binding Greeting}" Style="{StaticResource Heading}" Margin="40,16,40,0" />
+        <Label Grid.Row="1" Text="{Binding Greeting}" Style="{StaticResource Heading}" FontSize="32" Margin="40,12,40,0" />
 
         <CollectionView Grid.Row="2" ItemsSource="{Binding Presents}" Margin="32,8"
                         SelectionMode="Single" SelectedItem="{Binding TappedPresent, Mode=TwoWay}">
@@ -23,22 +24,42 @@
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:PresentItemViewModel">
-                    <Border Style="{StaticResource Card}" Padding="8" HeightRequest="170"
+                    <!-- Each tile is a little gift: tap it and it gets wrapped with a ribbon, bow and wax seal -->
+                    <Border HeightRequest="176" Padding="0" StrokeShape="RoundRectangle 18"
+                            Stroke="{StaticResource Gold}" StrokeThickness="2"
+                            Background="{Binding Present.Category, Converter={StaticResource CategoryBrush}}"
                             SemanticProperties.Description="{Binding Present.Name}">
                         <Border.Triggers>
                             <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
-                                <Setter Property="Stroke" Value="{StaticResource Gold}" />
-                                <Setter Property="StrokeThickness" Value="6" />
-                                <Setter Property="BackgroundColor" Value="{StaticResource HollyGreenLight}" />
+                                <Setter Property="Stroke" Value="{StaticResource SantaRed}" />
+                                <Setter Property="StrokeThickness" Value="5" />
                             </DataTrigger>
                         </Border.Triggers>
                         <Grid RowDefinitions="*,Auto">
-                            <Label Text="{Binding Present.Emoji}" FontSize="64"
-                                   HorizontalOptions="Center" VerticalOptions="Center" />
-                            <Label Grid.Row="1" Text="{Binding Present.Name}" FontSize="20" FontAttributes="Bold"
-                                   TextColor="{StaticResource Ink}" HorizontalTextAlignment="Center" LineBreakMode="TailTruncation" />
-                            <Label Text="✅" FontSize="30" HorizontalOptions="End" VerticalOptions="Start"
+                            <BoxView Grid.RowSpan="2" WidthRequest="18" Color="#B82D2D" HorizontalOptions="Center"
+                                     IsVisible="{Binding IsSelected}" />
+                            <BoxView HeightRequest="18" Color="#B82D2D" VerticalOptions="Center"
+                                     IsVisible="{Binding IsSelected}" />
+
+                            <Grid WidthRequest="104" HeightRequest="104" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,8,0,0">
+                                <Ellipse Fill="{StaticResource BaubleBrush}" Stroke="#80FFFFFF" StrokeThickness="2" />
+                                <Label Text="{Binding Present.Emoji}" FontSize="58"
+                                       HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Grid>
+
+                            <Label Text="🎀" FontSize="34" HorizontalOptions="Center" VerticalOptions="Start" Margin="0,-6,0,0"
                                    IsVisible="{Binding IsSelected}" />
+
+                            <Border Grid.Row="1" BackgroundColor="#D9FFFBF1" StrokeThickness="0" Padding="6,6">
+                                <Label Text="{Binding Present.Name}" FontSize="21"
+                                       HorizontalTextAlignment="Center" LineBreakMode="TailTruncation" />
+                            </Border>
+
+                            <Border Style="{StaticResource WaxSeal}" WidthRequest="48" HeightRequest="48"
+                                    HorizontalOptions="End" VerticalOptions="Start" Margin="0,6,6,0"
+                                    IsVisible="{Binding IsSelected}">
+                                <Label Text="✓" Style="{StaticResource WaxSealText}" FontFamily="OpenSansSemibold" FontSize="26" />
+                            </Border>
                         </Grid>
                     </Border>
                 </DataTemplate>
@@ -46,16 +67,16 @@
         </CollectionView>
 
         <Grid Grid.Row="3" Style="{StaticResource Footer}" ColumnDefinitions="Auto,*,Auto">
-            <Button Text="◀ Back" Style="{StaticResource SecondaryButton}" Command="{Binding BackCommand}" />
+            <Button Text="Back" Style="{StaticResource SecondaryButton}" Command="{Binding BackCommand}" />
             <Border x:Name="SleighBanner" Grid.Column="1" IsVisible="{Binding HasStatusMessage}"
-                    BackgroundColor="{StaticResource Gold}" Stroke="{StaticResource SantaRed}" StrokeThickness="4"
-                    StrokeShape="RoundRectangle 30" Padding="24,12"
+                    Background="{StaticResource BerryButtonBrush}" Stroke="{StaticResource Gold}" StrokeThickness="4"
+                    StrokeShape="RoundRectangle 32" Padding="28,10"
                     HorizontalOptions="Center" VerticalOptions="Center">
-                <Label Text="{Binding StatusMessage}" FontSize="30" FontAttributes="Bold"
-                       TextColor="{StaticResource Ink}" HorizontalTextAlignment="Center"
+                <Label Text="{Binding StatusMessage}" FontFamily="ChristmasTitle" FontSize="34"
+                       TextColor="{StaticResource GoldLight}" HorizontalTextAlignment="Center"
                        SemanticProperties.HeadingLevel="Level2" />
             </Border>
-            <Button Grid.Column="2" Text="Next: my letter ▶" Style="{StaticResource PrimaryButton}" Command="{Binding NextCommand}" />
+            <Button Grid.Column="2" Text="Next: my letter" Style="{StaticResource PrimaryButton}" Command="{Binding NextCommand}" />
         </Grid>
     </Grid>
-</ContentPage>
+</controls:StoryPage>

@@ -1,34 +1,49 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:SantaLetters.ViewModels"
-             x:Class="SantaLetters.Views.LetterPage"
-             x:DataType="vm:LetterViewModel"
-             Title="Write your letter">
+<controls:StoryPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:vm="clr-namespace:SantaLetters.ViewModels"
+                    xmlns:controls="clr-namespace:SantaLetters.Controls"
+                    x:Class="SantaLetters.Views.LetterPage"
+                    x:DataType="vm:LetterViewModel"
+                    Title="Write your letter">
 
     <Grid RowDefinitions="Auto,*,Auto">
-        <Border Style="{StaticResource HeaderBand}">
-            <Label Text="✏️ Anything else for Santa?" Style="{StaticResource HeaderTitle}" />
-        </Border>
+        <controls:StoryHeader Title="Anything else for Santa?" />
 
-        <Border Grid.Row="1" Style="{StaticResource LetterPaper}" Margin="48,24">
-            <Grid RowDefinitions="Auto,*,Auto" RowSpacing="12">
-                <Label Text="Dear Santa," Style="{StaticResource Heading}" FontFamily="OpenSansSemibold" />
-                <Editor Grid.Row="1" Text="{Binding ExtraWishes}" MaxLength="{Binding MaxLength}"
+        <Border Grid.Row="1" Style="{StaticResource LetterPaper}" Margin="48,20,48,8" Padding="0">
+            <Grid ColumnDefinitions="64,*" RowDefinitions="Auto,*,Auto">
+                <!-- Notebook margin line -->
+                <BoxView Grid.RowSpan="3" WidthRequest="2" Color="#D98C8C" HorizontalOptions="End" Margin="0,0,14,0" />
+
+                <Label Grid.Column="1" Text="Dear Santa," Style="{StaticResource Handwriting}"
+                       FontFamily="HandwritingBold" FontSize="40" Margin="0,20,0,0" />
+
+                <!-- North Pole postage stamp -->
+                <Border Grid.Column="1" HorizontalOptions="End" VerticalOptions="Start" Margin="0,16,28,0" Rotation="6"
+                        BackgroundColor="White" Stroke="{StaticResource SantaRed}" StrokeThickness="2"
+                        StrokeDashArray="3,2" StrokeShape="Rectangle" Padding="10,6" WidthRequest="104">
+                    <VerticalStackLayout>
+                        <Label Text="🎄" FontSize="40" HorizontalOptions="Center" />
+                        <Label Text="NORTH POLE" FontFamily="StoryCaps" FontSize="11" TextColor="{StaticResource SantaRed}"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Editor Grid.Row="1" Grid.Column="1" Text="{Binding ExtraWishes}" MaxLength="{Binding MaxLength}"
                         Placeholder="Tell Santa about anything else you'd like, or say hello to the reindeer! 🦌"
-                        FontSize="26" TextColor="{StaticResource Ink}" BackgroundColor="Transparent"
-                        AutoSize="Disabled" IsSpellCheckEnabled="True" />
-                <Grid Grid.Row="2" ColumnDefinitions="*,Auto">
-                    <Label Text="{Binding SignOff}" Style="{StaticResource Heading}" />
-                    <Label Grid.Column="1" Text="{Binding CharactersLeftText}" Style="{StaticResource Body}"
-                           FontSize="18" VerticalOptions="Center" />
+                        AutoSize="Disabled" IsSpellCheckEnabled="True" Margin="0,0,32,0" />
+
+                <Grid Grid.Row="2" Grid.Column="1" ColumnDefinitions="*,Auto" Padding="0,0,32,18">
+                    <Label Text="{Binding SignOff}" Style="{StaticResource Handwriting}" FontFamily="HandwritingBold" FontSize="34" />
+                    <Label Grid.Column="1" Text="{Binding CharactersLeftText}" FontFamily="StoryItalic" FontSize="20"
+                           TextColor="{StaticResource InkSoft}" VerticalOptions="Center" />
                 </Grid>
             </Grid>
         </Border>
 
         <Grid Grid.Row="2" Style="{StaticResource Footer}" ColumnDefinitions="Auto,*,Auto">
-            <Button Text="◀ Back" Style="{StaticResource SecondaryButton}" Command="{Binding BackCommand}" />
-            <Button Grid.Column="2" Text="Next: Nice List ▶" Style="{StaticResource PrimaryButton}" Command="{Binding NextCommand}" />
+            <Button Text="Back" Style="{StaticResource SecondaryButton}" Command="{Binding BackCommand}" />
+            <Button Grid.Column="2" Text="Next: Nice List" Style="{StaticResource PrimaryButton}" Command="{Binding NextCommand}" />
         </Grid>
     </Grid>
-</ContentPage>
+</controls:StoryPage>

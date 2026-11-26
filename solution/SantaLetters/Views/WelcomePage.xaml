@@ -1,54 +1,72 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:SantaLetters.ViewModels"
-             x:Class="SantaLetters.Views.WelcomePage"
-             x:DataType="vm:WelcomeViewModel"
-             Title="Welcome">
+<controls:StoryPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:vm="clr-namespace:SantaLetters.ViewModels"
+                    xmlns:controls="clr-namespace:SantaLetters.Controls"
+                    x:Class="SantaLetters.Views.WelcomePage"
+                    x:DataType="vm:WelcomeViewModel"
+                    Title="Welcome">
 
     <Grid RowDefinitions="Auto,*">
-        <Border Style="{StaticResource HeaderBand}">
-            <Grid ColumnDefinitions="*,Auto">
-                <Label Text="🎅 Letters to Santa" Style="{StaticResource HeaderTitle}" />
-                <Button Grid.Column="1" Text="🎄 Santa's Workshop" Style="{StaticResource SecondaryButton}"
-                        Command="{Binding OpenWorkshopCommand}" VerticalOptions="Center"
-                        HeightRequest="64" MinimumHeightRequest="64" Padding="24,0" FontSize="22" />
-            </Grid>
-        </Border>
+        <controls:StoryHeader Title="Letters to Santa">
+            <controls:StoryHeader.Accessory>
+                <Button Text="Santa's Workshop" Style="{StaticResource SecondaryButton}"
+                        Command="{Binding OpenWorkshopCommand}"
+                        HeightRequest="64" MinimumHeightRequest="64" Padding="28,0" FontSize="26" />
+            </controls:StoryHeader.Accessory>
+        </controls:StoryHeader>
 
         <ScrollView Grid.Row="1">
-            <Grid ColumnDefinitions="*,*" Padding="48,32" ColumnSpacing="48">
-                <VerticalStackLayout VerticalOptions="Center" Spacing="16">
-                    <Label Text="🎄✉️🎁" FontSize="110" HorizontalOptions="Center" />
-                    <Label Style="{StaticResource Heading}" HorizontalTextAlignment="Center"
-                           Text="Ho ho ho! Santa can't wait to hear from you!" />
-                    <Label Style="{StaticResource Body}" HorizontalTextAlignment="Center"
-                           Text="Pick your presents, write your letter and tell Santa how good you've been." />
-                </VerticalStackLayout>
+            <Grid ColumnDefinitions="*,*" Padding="48,28" ColumnSpacing="48">
 
-                <Border Grid.Column="1" Style="{StaticResource Card}" VerticalOptions="Center">
-                    <VerticalStackLayout Spacing="20">
+                <!-- Storybook illustration: a framed, snowy night at the North Pole -->
+                <Border Background="{StaticResource NightBrush}" Stroke="{StaticResource Gold}" StrokeThickness="5"
+                        StrokeShape="RoundRectangle 28" Padding="0" VerticalOptions="Center" HeightRequest="500">
+                    <Grid>
+                        <controls:SnowView FlakeCount="70" />
+                        <Label Text="🌙" FontSize="56" HorizontalOptions="End" VerticalOptions="Start" Margin="0,24,32,0" />
+                        <VerticalStackLayout VerticalOptions="Center" Spacing="10" Padding="32,0">
+                            <Grid WidthRequest="210" HeightRequest="210" HorizontalOptions="Center">
+                                <Ellipse Fill="{StaticResource HeaderBrush}" Stroke="{StaticResource Gold}" StrokeThickness="6" />
+                                <Ellipse Margin="14" Stroke="{StaticResource GoldLight}" StrokeThickness="2" StrokeDashArray="2,3" />
+                                <Label Text="🎅" FontSize="110" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Grid>
+                            <Label Text="Once upon a Christmas..." FontFamily="ChristmasTitle" FontSize="48"
+                                   TextColor="{StaticResource GoldLight}" HorizontalTextAlignment="Center" />
+                            <Label Style="{StaticResource Flourish}" />
+                            <Label FontFamily="StoryItalic" FontSize="26" TextColor="{StaticResource Paper}" HorizontalTextAlignment="Center"
+                                   Text="Santa can't wait to hear from you! Pick your presents, write your letter and tell him how good you've been." />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <!-- The form, written on Christmas letter paper -->
+                <Border Grid.Column="1" Style="{StaticResource LetterPaper}" VerticalOptions="Center" Padding="40,28">
+                    <VerticalStackLayout Spacing="14">
                         <Label Text="What's your name?" Style="{StaticResource Heading}" />
-                        <Entry Text="{Binding ChildName}" Placeholder="Type your name here"
-                               FontSize="30" MinimumHeightRequest="80" MaxLength="30"
-                               Keyboard="Text" ReturnCommand="{Binding StartCommand}" />
+                        <Border Stroke="{StaticResource Gold}" StrokeThickness="2" StrokeShape="RoundRectangle 14"
+                                BackgroundColor="#99FFFFFF" Padding="16,0">
+                            <Entry Text="{Binding ChildName}" Placeholder="Write your name here"
+                                   MinimumHeightRequest="80" MaxLength="30"
+                                   Keyboard="Text" ReturnCommand="{Binding StartCommand}" />
+                        </Border>
 
-                        <Label Text="How old are you?" Style="{StaticResource Heading}" />
+                        <Label Text="How old are you?" Style="{StaticResource Heading}" Margin="0,8,0,0" />
                         <HorizontalStackLayout Spacing="32" HorizontalOptions="Center">
                             <Button Text="−" Style="{StaticResource RoundButton}" Command="{Binding DecreaseAgeCommand}"
                                     SemanticProperties.Description="Younger" />
-                            <Label Text="{Binding Age}" FontSize="56" FontAttributes="Bold" TextColor="{StaticResource Ink}"
-                                   VerticalOptions="Center" WidthRequest="90" HorizontalTextAlignment="Center" />
+                            <Label Text="{Binding Age}" FontFamily="ChristmasTitle" FontSize="68" TextColor="{StaticResource SantaRedDark}"
+                                   VerticalOptions="Center" WidthRequest="100" HorizontalTextAlignment="Center" />
                             <Button Text="+" Style="{StaticResource RoundButton}" Command="{Binding IncreaseAgeCommand}"
                                     SemanticProperties.Description="Older" />
                         </HorizontalStackLayout>
 
                         <Label Text="{Binding ErrorMessage}" Style="{StaticResource ErrorText}" HorizontalTextAlignment="Center" />
 
-                        <Button Text="Start my letter ✏️" Style="{StaticResource PrimaryButton}" Command="{Binding StartCommand}" />
+                        <Button Text="Start my letter" Style="{StaticResource PrimaryButton}" Command="{Binding StartCommand}" />
                     </VerticalStackLayout>
                 </Border>
             </Grid>
         </ScrollView>
     </Grid>
-</ContentPage>
+</controls:StoryPage>

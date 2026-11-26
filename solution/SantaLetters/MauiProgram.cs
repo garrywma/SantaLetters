@@ -17,6 +17,13 @@ public static class MauiProgram
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+				fonts.AddFont("MountainsOfChristmas-Bold.ttf", "ChristmasTitle");
+				fonts.AddFont("MountainsOfChristmas-Regular.ttf", "ChristmasTitleLight");
+				fonts.AddFont("CinzelDecorative-Bold.ttf", "StoryCaps");
+				fonts.AddFont("IMFellDWPica-Regular.ttf", "StoryBody");
+				fonts.AddFont("IMFellDWPica-Italic.ttf", "StoryItalic");
+				fonts.AddFont("Kalam-Regular.ttf", "Handwriting");
+				fonts.AddFont("Kalam-Bold.ttf", "HandwritingBold");
 			});
 
 		builder.Services.AddSingleton<IPresentCatalog, PresentCatalog>();

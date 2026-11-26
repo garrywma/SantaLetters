@@ -52,7 +52,8 @@ public partial class SummaryViewModel(LetterDraft draft, IQuestionBank questionB
         {
             await store.SaveAsync(letter);
             IsSent = true;
-            await Task.Delay(3000);
+            // Leave time for SummaryPage's seal-and-send animation (~3.5s) plus a moment to enjoy it.
+            await Task.Delay(5000);
             draft.Reset();
             await Shell.Current.GoToAsync("//welcome");
         }
