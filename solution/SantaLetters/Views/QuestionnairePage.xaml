@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SantaLetters.ViewModels"
+             x:Class="SantaLetters.Views.QuestionnairePage"
+             x:DataType="vm:QuestionnaireViewModel"
+             Title="Naughty or nice">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <Border Style="{StaticResource HeaderBand}">
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Text="😇 Naughty or Nice?" Style="{StaticResource HeaderTitle}" />
+                <Label Grid.Column="1" Text="{Binding ProgressText}" Style="{StaticResource HeaderSubtitle}" />
+            </Grid>
+        </Border>
+
+        <VerticalStackLayout Grid.Row="1" Padding="64,24" Spacing="24" VerticalOptions="Center">
+            <ProgressBar Progress="{Binding Progress}" ProgressColor="{StaticResource HollyGreen}" HeightRequest="16" />
+            <Label Text="{Binding CurrentQuestion.Emoji}" FontSize="110" HorizontalOptions="Center" />
+            <Label Text="{Binding CurrentQuestion.Text}" Style="{StaticResource Heading}" FontSize="38"
+                   HorizontalTextAlignment="Center" />
+            <HorizontalStackLayout Spacing="64" HorizontalOptions="Center" Margin="0,16,0,0">
+                <Button Text="👍 Yes" Style="{StaticResource PrimaryButton}" Command="{Binding YesCommand}" />
+                <Button Text="👎 No" Style="{StaticResource PrimaryButton}" BackgroundColor="{StaticResource SantaRed}"
+                        Command="{Binding NoCommand}" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <Grid Grid.Row="2" Style="{StaticResource Footer}" ColumnDefinitions="Auto,*">
+            <Button Text="◀ Back" Style="{StaticResource SecondaryButton}" Command="{Binding BackCommand}" />
+            <Label Grid.Column="1" Text="Be honest - Santa always knows! 🎅" Style="{StaticResource Body}"
+                   HorizontalOptions="End" VerticalOptions="Center" />
+        </Grid>
+    </Grid>
+</ContentPage>

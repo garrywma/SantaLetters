@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="SantaLetters.Core/SantaLetters.Core.csproj" />
+  <Project Path="SantaLetters.Tests/SantaLetters.Tests.csproj" />
+  <Project Path="SantaLetters/SantaLetters.csproj" />
+</Solution>

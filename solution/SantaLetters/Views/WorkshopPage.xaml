@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SantaLetters.ViewModels"
+             x:Class="SantaLetters.Views.WorkshopPage"
+             x:DataType="vm:WorkshopViewModel"
+             Title="Santa's Workshop">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <Border Style="{StaticResource HeaderBand}" BackgroundColor="{StaticResource HollyGreen}">
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Text="🎄 Santa's Workshop" Style="{StaticResource HeaderTitle}" />
+                <Label Grid.Column="1" Text="{Binding StatsText}" Style="{StaticResource HeaderSubtitle}" />
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1" ColumnDefinitions="2*,*" Padding="32,16" ColumnSpacing="24">
+            <Grid RowDefinitions="Auto,*">
+            <Label Text="✉️ Letters" Style="{StaticResource Heading}" Margin="0,0,0,12" />
+            <CollectionView Grid.Row="1" ItemsSource="{Binding Letters}" SelectionMode="None">
+                <CollectionView.EmptyView>
+                    <Label Text="No letters yet. The elves are waiting! 🧝" Style="{StaticResource Body}" Margin="0,24" />
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="vm:LetterCard">
+                        <Border Style="{StaticResource Card}" Margin="0,0,0,16">
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="6" ColumnSpacing="16">
+                                <Label Text="{Binding Title}" Style="{StaticResource Heading}" FontSize="26" />
+                                <Label Grid.Row="1" Text="{Binding SentText}" Style="{StaticResource Body}" FontSize="18" TextColor="{StaticResource Gray500}" />
+                                <Label Grid.Row="2" Text="{Binding PresentsText}" Style="{StaticResource Body}" />
+                                <Label Grid.Row="3" Text="{Binding ExtraWishes}" Style="{StaticResource Body}" FontSize="20"
+                                       FontAttributes="Italic" IsVisible="{Binding HasExtraWishes}" />
+                                <Label Grid.Column="1" Text="{Binding VerdictText}" FontSize="22" FontAttributes="Bold"
+                                       TextColor="{StaticResource SantaRed}" HorizontalOptions="End">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsNice}" Value="True">
+                                            <Setter Property="TextColor" Value="{StaticResource HollyGreen}" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                                <Button Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Text="🔥 Delete"
+                                        Style="{StaticResource SecondaryButton}" FontSize="20" MinimumHeightRequest="64"
+                                        VerticalOptions="End"
+                                        Command="{Binding DeleteCommand}" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            </Grid>
+
+            <Border Grid.Column="1" Style="{StaticResource LetterPaper}" VerticalOptions="Start">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="🧝 Elves' production list" Style="{StaticResource Heading}" FontSize="26" />
+                    <Label Text="Presents for nice children only!" Style="{StaticResource Body}" FontSize="18" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Production}" Spacing="8">
+                        <BindableLayout.EmptyView>
+                            <Label Text="Nothing to make yet." Style="{StaticResource Body}" />
+                        </BindableLayout.EmptyView>
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:ProductionItem">
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                    <Label Text="{Binding Emoji}" FontSize="30" />
+                                    <Label Grid.Column="1" Text="{Binding Name}" Style="{StaticResource Body}" VerticalOptions="Center" />
+                                    <Label Grid.Column="2" Text="{Binding Count, StringFormat='× {0}'}" Style="{StaticResource Heading}"
+                                           FontSize="26" VerticalOptions="Center" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="2" Style="{StaticResource Footer}" ColumnDefinitions="Auto,*">
+            <Button Text="◀ Back" Style="{StaticResource SecondaryButton}" Command="{Binding BackCommand}" />
+        </Grid>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    Portal design notes:
+    - Viewed from 50-100cm, so text is large and touch targets are >= 64dp (96dp for primary actions).
+    - Portal draws back/home/status pills over the top ~64dp of the app, so headers are dark and
+      padded down to keep content clear of them.
+-->
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Color x:Key="SantaRed">#C62828</Color>
+    <Color x:Key="SantaRedDark">#8E0000</Color>
+    <Color x:Key="HollyGreen">#1B5E20</Color>
+    <Color x:Key="HollyGreenLight">#E8F5E9</Color>
+    <Color x:Key="Snow">#FFFDF7</Color>
+    <Color x:Key="Paper">#FFF3D6</Color>
+    <Color x:Key="Gold">#F9A825</Color>
+    <Color x:Key="Ink">#3E2723</Color>
+
+    <x:Double x:Key="PortalTopInset">72</x:Double>
+
+    <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
+        <Setter Property="BackgroundColor" Value="{StaticResource Snow}" />
+        <Setter Property="Shell.NavBarIsVisible" Value="False" />
+    </Style>
+
+    <Style x:Key="HeaderBand" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource SantaRed}" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="Padding" Value="40,72,40,16" />
+    </Style>
+
+    <Style x:Key="HeaderTitle" TargetType="Label">
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontSize" Value="36" />
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
+    <Style x:Key="HeaderSubtitle" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource Paper}" />
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <Style x:Key="Body" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource Ink}" />
+        <Setter Property="FontSize" Value="24" />
+    </Style>
+
+    <Style x:Key="Heading" TargetType="Label" BasedOn="{StaticResource Body}">
+        <Setter Property="FontSize" Value="30" />
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
+    <Style x:Key="ErrorText" TargetType="Label" BasedOn="{StaticResource Body}">
+        <Setter Property="TextColor" Value="{StaticResource SantaRed}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
+    <Style x:Key="Footer" TargetType="Grid">
+        <Setter Property="Padding" Value="40,12,40,24" />
+        <Setter Property="ColumnSpacing" Value="24" />
+        <Setter Property="BackgroundColor" Value="{StaticResource Snow}" />
+    </Style>
+
+    <Style x:Key="PrimaryButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource HollyGreen}" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontSize" Value="28" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="CornerRadius" Value="48" />
+        <Setter Property="MinimumHeightRequest" Value="96" />
+        <Setter Property="MinimumWidthRequest" Value="280" />
+        <Setter Property="Padding" Value="40,0" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{StaticResource Gray300}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SecondaryButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="White" />
+        <Setter Property="TextColor" Value="{StaticResource SantaRed}" />
+        <Setter Property="BorderColor" Value="{StaticResource SantaRed}" />
+        <Setter Property="BorderWidth" Value="3" />
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="CornerRadius" Value="40" />
+        <Setter Property="MinimumHeightRequest" Value="80" />
+        <Setter Property="Padding" Value="32,0" />
+    </Style>
+
+    <Style x:Key="RoundButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource SantaRed}" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontSize" Value="40" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="WidthRequest" Value="88" />
+        <Setter Property="HeightRequest" Value="88" />
+        <Setter Property="CornerRadius" Value="44" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+
+    <Style x:Key="Card" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="White" />
+        <Setter Property="Stroke" Value="{StaticResource Gray200}" />
+        <Setter Property="StrokeThickness" Value="2" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 24" />
+        <Setter Property="Padding" Value="24" />
+    </Style>
+
+    <Style x:Key="LetterPaper" TargetType="Border" BasedOn="{StaticResource Card}">
+        <Setter Property="BackgroundColor" Value="{StaticResource Paper}" />
+        <Setter Property="Stroke" Value="{StaticResource Gold}" />
+        <Setter Property="StrokeThickness" Value="4" />
+    </Style>
+
+</ResourceDictionary>

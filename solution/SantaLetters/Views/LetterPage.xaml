@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SantaLetters.ViewModels"
+             x:Class="SantaLetters.Views.LetterPage"
+             x:DataType="vm:LetterViewModel"
+             Title="Write your letter">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <Border Style="{StaticResource HeaderBand}">
+            <Label Text="✏️ Anything else for Santa?" Style="{StaticResource HeaderTitle}" />
+        </Border>
+
+        <Border Grid.Row="1" Style="{StaticResource LetterPaper}" Margin="48,24">
+            <Grid RowDefinitions="Auto,*,Auto" RowSpacing="12">
+                <Label Text="Dear Santa," Style="{StaticResource Heading}" FontFamily="OpenSansSemibold" />
+                <Editor Grid.Row="1" Text="{Binding ExtraWishes}" MaxLength="{Binding MaxLength}"
+                        Placeholder="Tell Santa about anything else you'd like, or say hello to the reindeer! 🦌"
+                        FontSize="26" TextColor="{StaticResource Ink}" BackgroundColor="Transparent"
+                        AutoSize="Disabled" IsSpellCheckEnabled="True" />
+                <Grid Grid.Row="2" ColumnDefinitions="*,Auto">
+                    <Label Text="{Binding SignOff}" Style="{StaticResource Heading}" />
+                    <Label Grid.Column="1" Text="{Binding CharactersLeftText}" Style="{StaticResource Body}"
+                           FontSize="18" VerticalOptions="Center" />
+                </Grid>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="2" Style="{StaticResource Footer}" ColumnDefinitions="Auto,*,Auto">
+            <Button Text="◀ Back" Style="{StaticResource SecondaryButton}" Command="{Binding BackCommand}" />
+            <Button Grid.Column="2" Text="Next: Nice List ▶" Style="{StaticResource PrimaryButton}" Command="{Binding NextCommand}" />
+        </Grid>
+    </Grid>
+</ContentPage>

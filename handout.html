@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Code Dojo: Letters to Santa – Attendee Handout</title>
+<style>
+  @page { size: A4; margin: 12mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", "Segoe UI Emoji", Arial, sans-serif;
+    font-size: 10pt; line-height: 1.35; color: #3E2723; margin: 0;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .page { page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+  header {
+    background: #C62828; color: #fff; border-radius: 10px;
+    padding: 10px 16px; display: flex; justify-content: space-between; align-items: center;
+  }
+  header h1 { margin: 0; font-size: 22pt; }
+  header .tag { font-size: 10pt; text-align: right; opacity: .95; }
+  h2 {
+    color: #1B5E20; font-size: 13pt; margin: 9px 0 5px;
+    border-bottom: 3px solid #F9A825; padding-bottom: 2px;
+  }
+  .story {
+    background: #FFF3D6; border-left: 6px solid #F9A825; border-radius: 6px;
+    padding: 8px 12px; margin-top: 10px; font-style: italic;
+  }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  table { width: 100%; border-collapse: collapse; font-size: 9.5pt; }
+  th { background: #1B5E20; color: #fff; text-align: left; padding: 4px 6px; }
+  td { padding: 4px 6px; border-bottom: 1px solid #e0d6c8; vertical-align: top; }
+  tr:nth-child(even) td { background: #FFFDF7; }
+  ol, ul { margin: 4px 0; padding-left: 20px; }
+  li { margin: 2px 0; }
+  code { font-family: Consolas, monospace; font-size: 9pt; background: #f3eee6; padding: 0 3px; border-radius: 3px; }
+  pre {
+    font-family: Consolas, monospace; font-size: 8pt; background: #2b2b2b; color: #f8f8f2;
+    padding: 6px 8px; border-radius: 6px; margin: 4px 0; white-space: pre-wrap;
+  }
+  .box { border: 2px solid #C62828; border-radius: 8px; padding: 6px 10px; }
+  .box.green { border-color: #1B5E20; }
+  .check li { list-style: none; margin-left: -18px; }
+  .check li::before { content: "☐ "; font-size: 11pt; }
+  .notes { border: 1px dashed #aaa; border-radius: 6px; height: 70px; padding: 6px; color: #999; }
+  footer { margin-top: 8px; font-size: 8pt; color: #8d7b70; text-align: center; }
+</style>
+</head>
+<body>
+
+<!-- ===================== PAGE 1 ===================== -->
+<section class="page">
+  <header>
+    <h1>🎅 Letters to Santa</h1>
+    <div class="tag">Code Dojo · .NET MAUI on a Meta Portal Mini<br>Team: ______________________</div>
+  </header>
+
+  <div class="story">
+    Mrs Claus is modernising Santa's Christmas processes. Children's handwritten letters are hard to read,
+    and Santa doesn't want to give the wrong presents. She wants a <b>tablet app</b> where children
+    <b>choose their presents</b>, <b>add anything else in a letter</b>, and complete a
+    <b>Naughty or Nice questionnaire</b> so Santa knows if they've been good this year.
+  </div>
+
+  <h2>🎯 User stories</h2>
+  <ol>
+    <li><b>As a child</b> I enter my name and age so Santa knows who the letter is from. <i>(provided in the starter)</i></li>
+    <li><b>As a child</b> I tap pictures of presents to choose up to <b>5</b>, so I don't need to write neatly.</li>
+    <li><b>As a child</b> I write a letter to add anything else I'd like.</li>
+    <li><b>As a child</b> I answer a short set of yes/no <b>Naughty or Nice</b> questions.</li>
+    <li><b>As a child</b> I see my letter, find out if I'm on the Nice List, and <b>send it to Santa</b>.</li>
+    <li><b>As Santa</b> I open <b>Santa's Workshop</b> to read every letter with each child's verdict.</li>
+    <li><b>As an elf</b> I see a <b>production list</b> of how many of each present to make (nice children only!).</li>
+  </ol>
+
+  <h2>🧪 Katas: make the tests go green first (<code>SantaLetters.Core</code>)</h2>
+  <table>
+    <tr><th style="width:6%">#</th><th style="width:22%">Class</th><th>Rule</th></tr>
+    <tr><td>1</td><td><code>NiceListCalculator</code></td>
+      <td>Score 0–100 = weighted share of “nice” answers. Some questions are phrased naughtily
+      (<i>“Have you told any fibs?”</i>) so <b>No</b> is nice; use each question's <code>NiceAnswer</code>.
+      Unanswered = not nice. Verdicts: <b>≥85</b> Super Nice, <b>≥60</b> Nice, <b>≥35</b> Almost Nice, else Naughty.</td></tr>
+    <tr><td>2</td><td><code>LetterValidator</code></td>
+      <td>Name required · age 1–16 · 1–5 presents, no duplicates · letter ≤ 500 characters · every question answered.</td></tr>
+    <tr><td>3</td><td><code>JsonLetterStore</code></td>
+      <td>Save letters to a JSON file on the device. They survive restarts, come back newest first, and can be deleted.</td></tr>
+  </table>
+
+  <h2>⏱️ Timeline (about 3 hours)</h2>
+  <div class="cols">
+    <table>
+      <tr><th style="width:22%">Time</th><th>Activity</th></tr>
+      <tr><td>0:00</td><td>Brief, form pairs, deploy the starter to a Portal or emulator</td></tr>
+      <tr><td>0:20</td><td><b>Katas 1–3</b> with TDD</td></tr>
+      <tr><td>1:00</td><td><b>Stage 1</b>: Presents page</td></tr>
+      <tr><td>1:30</td><td><b>Stage 2</b>: Letter + questionnaire</td></tr>
+    </table>
+    <table>
+      <tr><th style="width:22%">Time</th><th>Activity</th></tr>
+      <tr><td>2:10</td><td><b>Stage 3</b>: Summary + Send to Santa</td></tr>
+      <tr><td>2:30</td><td><b>Stage 4</b>: Workshop + elf list</td></tr>
+      <tr><td>2:50</td><td>Show and tell on the Portals 🎄</td></tr>
+    </table>
+  </div>
+
+  <h2>✅ Progress tracker</h2>
+  <div class="cols">
+    <ul class="check">
+      <li>Starter runs on the Portal / emulator</li>
+      <li>Kata 1: NiceListCalculator green</li>
+      <li>Kata 2: LetterValidator green</li>
+      <li>Kata 3: JsonLetterStore green (27/27)</li>
+    </ul>
+    <ul class="check">
+      <li>Presents page: tap to choose, max 5</li>
+      <li>Letter page + questionnaire</li>
+      <li>Summary + Send to Santa</li>
+      <li>Santa's Workshop + elf production list</li>
+    </ul>
+  </div>
+
+  <h2>📝 Notes</h2>
+  <div class="notes"></div>
+
+  <footer>Letters to Santa · Code Dojo · page 1 of 2</footer>
+</section>
+
+<!-- ===================== PAGE 2 ===================== -->
+<section class="page">
+  <header>
+    <h1>🧰 Cheat sheet</h1>
+    <div class="tag">Keep this next to your keyboard</div>
+  </header>
+
+  <div class="cols">
+    <div>
+      <h2>▶️ Commands</h2>
+      <pre>cd starter
+dotnet test SantaLetters.Tests
+
+# Fast loop on a laptop
+dotnet build SantaLetters -t:Run `
+  -f net10.0-windows10.0.19041.0
+
+# On the Portal / Android emulator
+dotnet build SantaLetters -t:Run -f net10.0-android
+adb devices -l</pre>
+
+      <h2>📺 Connecting a Portal Mini</h2>
+      <ol>
+        <li>On the Portal: <b>Settings → Debug → ADB Enabled</b>.</li>
+        <li>Plug USB-C into the back and tap <b>Allow</b> on the debugging prompt.</li>
+        <li>Check <code>adb devices -l</code>. If it's missing, toggle ADB off and on again.</li>
+      </ol>
+
+      <h2>📐 Portal design rules</h2>
+      <table>
+        <tr><th>Constraint</th><th>Do this</th></tr>
+        <tr><td>Android 10, no Google services</td><td>No Firebase, Maps or Google sign-in</td></tr>
+        <tr><td>8" landscape, 1280×800</td><td>Design wide layouts</td></tr>
+        <tr><td>Used by children, at arm's length</td><td>Touch targets ≥ 64dp, text ≥ 18–24</td></tr>
+        <tr><td>System pills cover the top ~64dp</td><td>Use the dark <code>HeaderBand</code> style</td></tr>
+        <tr><td>Emoji 12 only</td><td>Newer emoji (🪆 🪥) show as blank boxes</td></tr>
+        <tr><td>Small screen</td><td>Keep Next/Send in a fixed footer, not at the bottom of a <code>ScrollView</code></td></tr>
+      </table>
+
+      <h2>🎨 Styles provided (<code>Christmas.xaml</code>)</h2>
+      <p style="margin:4px 0">
+        <code>HeaderBand</code> <code>HeaderTitle</code> <code>PrimaryButton</code> <code>SecondaryButton</code>
+        <code>RoundButton</code> <code>Card</code> <code>LetterPaper</code> <code>Heading</code> <code>Body</code>
+        <code>ErrorText</code> <code>Footer</code>
+      </p>
+    </div>
+
+    <div>
+      <h2>🧩 MAUI snippets</h2>
+      <b>View model (CommunityToolkit.Mvvm)</b>
+      <pre>public partial class LetterViewModel : ObservableObject
+{
+    [ObservableProperty]
+    public partial string Wishes { get; set; } = "";
+
+    [RelayCommand]
+    private Task NextAsync() =>
+        Shell.Current.GoToAsync(nameof(QuestionnairePage));
+}</pre>
+      <b>Register a page and route</b>
+      <pre>// MauiProgram.cs
+builder.Services.AddTransient&lt;LetterViewModel&gt;();
+builder.Services.AddTransient&lt;LetterPage&gt;();
+// AppShell.xaml.cs
+Routing.RegisterRoute(nameof(LetterPage), typeof(LetterPage));</pre>
+      <b>Tappable tiles (works for touch and mouse)</b>
+      <pre>&lt;CollectionView ItemsSource="{Binding Presents}"
+    SelectionMode="Single"
+    SelectedItem="{Binding TappedPresent, Mode=TwoWay}"&gt;
+  &lt;CollectionView.ItemsLayout&gt;
+    &lt;GridItemsLayout Orientation="Vertical" Span="6" /&gt;
+  &lt;/CollectionView.ItemsLayout&gt;</pre>
+      <p style="margin:2px 0 6px">Handle the tap in <code>OnTappedPresentChanged</code>, then set
+        <code>TappedPresent = null</code> so the same tile can be tapped again.</p>
+      <b>Handy APIs</b>
+      <ul>
+        <li><code>FileSystem.AppDataDirectory</code>: where to save the JSON file</li>
+        <li><code>await DisplayAlertAsync(title, msg, "Delete", "Keep")</code></li>
+        <li><code>Shell.Current.GoToAsync("..")</code> back · <code>"//welcome"</code> home</li>
+        <li><code>LetterDraft</code>: singleton holding the letter between pages</li>
+      </ul>
+
+      <h2>🌟 Finished early? Stretch goals</h2>
+      <ul>
+        <li>🗂️ Category filter chips (<code>PresentCategory</code>)</li>
+        <li>🔒 Parental PIN for Santa's Workshop</li>
+        <li>🔊 Read questions aloud: <code>TextToSpeech.Default.SpeakAsync</code></li>
+        <li>✨ Falling snow, or a sleigh flying off on Send</li>
+        <li>🌍 Localisation · 📊 Santa dashboard</li>
+        <li>🧪 View model tests for the “max 5 presents” rule</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>Letters to Santa · Code Dojo · page 2 of 2</footer>
+</section>
+
+</body>
+</html>
