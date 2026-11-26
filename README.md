@@ -147,7 +147,7 @@ Portals were discontinued at the end of 2022, but Meta has since enabled ADB so 
 - Christmas theme (`Resources/Styles/Christmas.xaml`) with Portal-friendly styles: `HeaderBand`, `PrimaryButton`, `SecondaryButton`, `RoundButton`, `Card`, `LetterPaper`, `Heading`, `Body`, `ErrorText`, `Footer`.
 - Working **Welcome page** (name and age) using CommunityToolkit.Mvvm and Shell navigation.
 - `LetterDraft`: a singleton holding the letter while the child moves between pages.
-- Domain models, a present catalogue (18 presents, all with Portal-safe emoji) and 9 Nice List questions.
+- Domain models, a present catalogue (24 presents, all with Portal-safe emoji) and 9 Nice List questions.
 - Dependency injection already wired up for the services.
 - 27 tests describing the business rules (26 fail until you finish the katas).
 
