@@ -47,27 +47,31 @@
                 </CollectionView>
             </Grid>
 
-            <Border Grid.Column="1" Style="{StaticResource LetterPaper}" VerticalOptions="Start">
-                <VerticalStackLayout Spacing="12">
-                    <Label Text="🧝 Elves' production list" Style="{StaticResource Heading}" FontSize="32" />
-                    <Label Text="Presents for nice children only!" FontFamily="StoryItalic" FontSize="20" />
-                    <Label Style="{StaticResource Flourish}" />
-                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Production}" Spacing="8">
-                        <BindableLayout.EmptyView>
-                            <Label Text="Nothing to make yet." FontFamily="StoryItalic" />
-                        </BindableLayout.EmptyView>
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="vm:ProductionItem">
-                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                                    <Label Text="{Binding Emoji}" FontSize="30" />
-                                    <Label Grid.Column="1" Text="{Binding Name}" VerticalOptions="Center" />
-                                    <Label Grid.Column="2" Text="{Binding Count, StringFormat='× {0}'}" Style="{StaticResource Handwriting}"
-                                           FontFamily="HandwritingBold" VerticalOptions="Center" />
-                                </Grid>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
+            <Border Grid.Column="1" Style="{StaticResource LetterPaper}">
+                <Grid RowDefinitions="Auto,*" RowSpacing="12">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="🧝 Elves' production list" Style="{StaticResource Heading}" FontSize="32" />
+                        <Label Text="Presents for nice children only!" FontFamily="StoryItalic" FontSize="20" />
+                        <Label Style="{StaticResource Flourish}" />
                     </VerticalStackLayout>
-                </VerticalStackLayout>
+                    <ScrollView Grid.Row="1">
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Production}" Spacing="8">
+                            <BindableLayout.EmptyView>
+                                <Label Text="Nothing to make yet." FontFamily="StoryItalic" />
+                            </BindableLayout.EmptyView>
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="vm:ProductionItem">
+                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                        <Label Text="{Binding Emoji}" FontSize="30" />
+                                        <Label Grid.Column="1" Text="{Binding Name}" VerticalOptions="Center" />
+                                        <Label Grid.Column="2" Text="{Binding Count, StringFormat='× {0}'}" Style="{StaticResource Handwriting}"
+                                               FontFamily="HandwritingBold" VerticalOptions="Center" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </ScrollView>
+                </Grid>
             </Border>
         </Grid>
 
